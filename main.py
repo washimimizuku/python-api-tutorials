@@ -33,7 +33,14 @@ async def list_items(skip: int = 0, limit: int = 10):
 
 @app.get("/items/read/")
 async def read_items(
-    q: Optional[str] = Query(None, min_length=3, max_length=50, regex="^fixedquery$"), 
+    q: Optional[str] = Query(
+        None,
+        title="Query string",
+        description="Query string for the items to search in the database that have a good match",
+        min_length=3,
+        max_length=50,
+        regex="^fixedquery$"    
+    ), 
     defaults_to: str = Query("default value"),
     required_query: str = Query(..., min_length=3),
     multiple_values: Optional[List[str]] = Query(None),

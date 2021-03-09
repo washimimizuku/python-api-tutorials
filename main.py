@@ -1,7 +1,7 @@
 from enum import Enum
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 
 
 class Item(BaseModel):
@@ -34,13 +34,22 @@ async def list_items(skip: int = 0, limit: int = 10):
 @app.get("/items/read/")
 async def read_items(
     q: Optional[str] = Query(None, min_length=3, max_length=50, regex="^fixedquery$"), 
-    defaults_to: str = Query("default value")
+    defaults_to: str = Query("default value"),
+    required_query: str = Query(..., min_length=3),
+    multiple_values: Optional[List[str]] = Query(None),
+    multiple_default_values: List[str] = Query(["foo", "bar"])
 ):
     results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
     if q:
         results.update({"q": q})
     if defaults_to:
         results.update({"defaults_to": defaults_to})
+    if required_query:
+        results.update({"required_query": required_query})
+    if multiple_values:
+        results.update({"multiple_values": multiple_values})
+    if multiple_default_values:
+        results.update({"multiple_default_values": multiple_default_values})
     return results
 
 

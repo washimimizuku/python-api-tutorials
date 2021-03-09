@@ -45,7 +45,8 @@ async def read_items(
     required_query: str = Query(..., min_length=3),
     multiple_values: Optional[List[str]] = Query(None),
     multiple_default_values: List[str] = Query(["foo", "bar"]),
-    item_query: Optional[str] = Query(None, alias="item-query")
+    item_query: Optional[str] = Query(None, alias="item-query"),
+    deprecated_parameter: Optional[str] = Query(None, deprecated=True)
 ):
     results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
     if q:
@@ -60,6 +61,8 @@ async def read_items(
         results.update({"multiple_default_values": multiple_default_values})
     if item_query:
         results.update({"item_query": item_query})
+    if deprecated_parameter:
+        results.update({"deprecated_parameter": deprecated_parameter})
     return results
 
 

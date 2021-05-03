@@ -2,15 +2,24 @@
 
 A tutorial to learn and experiment with gRPC: https://realpython.com/python-microservices-grpc/
 
-## Generate recommendations python code from protobufs
+## Install
 
-Inside folder gprc-microservices, run:
+$ pipenv shell
+$ pipenv install
 
-$ python -m grpc_tools.protoc -I protobufs --python_out=recommendations --grpc_python_out=recommendations protobufs/recommendations.proto
+## Generate recommendations python code from protobufs in recommendations
+
+$ cd recommendations
+$ python -m grpc_tools.protoc -I ../protobufs --python_out=. --grpc_python_out=. ../protobufs/recommendations.proto
+## Generate recommendations python code from protobufs in marketplace
+
+$ cd marketplace
+$ python -m grpc_tools.protoc -I ../protobufs --python_out=. --grpc_python_out=. ../protobufs/recommendations.proto
 
 ## Run grpc recommendations server
 
-$ python recommendations/recommendations.py
+$ cd recommendations
+$ python recommendations.py
 
 ## Test grpc client
 
@@ -21,3 +30,8 @@ $ python recommendations/recommendations.py
 >>> request = RecommendationRequest(
 ...    user_id=1, category=BookCategory.SCIENCE_FICTION, max_results=3)
 >>> client.Recommend(request)
+
+## Run marketplace
+
+$ cd marketplace
+$ FLASK_APP=marketplace.py flask run

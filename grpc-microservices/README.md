@@ -37,14 +37,13 @@ $ python recommendations.py
 >>> from recommendations_pb2_grpc import RecommendationsStub
 >>> channel = grpc.insecure_channel("localhost:50051")
 >>> client = RecommendationsStub(channel)
->>> request = RecommendationRequest(
-...    user_id=1, category=BookCategory.SCIENCE_FICTION, max_results=3)
+>>> request = RecommendationRequest(user_id=1, category=BookCategory.SCIENCE_FICTION, max_results=3)
 >>> client.Recommend(request)
 ```
 
 ## Run marketplace
 
-```bash
+```sh
 $ cd marketplace
 $ FLASK_APP=marketplace.py flask run
 ```
@@ -55,7 +54,7 @@ Go to http://127.0.0.1:5000/
 
 ### recommendations
 
-```bash
+```sh
 $ docker build . -f recommendations/Dockerfile -t recommendations
 $ docker network create microservices
 $ docker run -p 127.0.0.1:50051:50051/tcp --network microservices --name recommendations recommendations
@@ -63,7 +62,7 @@ $ docker run -p 127.0.0.1:50051:50051/tcp --network microservices --name recomme
 
 ### marketplace
 
-```bash
+```sh
 $ docker build . -f marketplace/Dockerfile -t marketplace
 $ docker run -p 127.0.0.1:5000:5000/tcp --network microservices -e RECOMMENDATIONS_HOST=recommendations marketplace
 ```

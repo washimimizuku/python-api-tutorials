@@ -36,6 +36,8 @@ $ python recommendations.py
 $ cd marketplace
 $ FLASK_APP=marketplace.py flask run
 
+Go to http://127.0.0.1:5000/
+
 ## Build and run Docker images
 
 ### recommendations

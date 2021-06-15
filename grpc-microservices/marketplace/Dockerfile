@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.8.8-slim-buster
 
 RUN mkdir /service
 COPY protobufs/ /service/protobufs/
